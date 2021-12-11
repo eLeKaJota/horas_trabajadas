@@ -6,7 +6,6 @@ import {Text} from 'react-native';
 
 export const User = createContext();
 
-// eslint-disable-next-line react/prop-types
 const UserContext = ({children}) => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
