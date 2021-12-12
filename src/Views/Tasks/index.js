@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Button,
   FlatList,
   Text,
   TouchableHighlight,
@@ -12,25 +13,25 @@ import {COLOR} from '../../Constants/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
 
-const Categories = ({navigation}) => {
-  const [categories, setCategories] = useState();
+const Tasks = ({navigation, category}) => {
+  const [tasks, setTasks] = useState();
   const {user, account} = useContext(User);
 
   useEffect(() => {
     if (user && account) {
-      getCategories(account.id);
+      getTasks(account.id);
     }
-  }, [account, user]);
+  }, []);
 
-  const getCategories = async account => {
-    const categoriesSnapshot = await firestore().collection('categories').get();
-    let cat = [];
-    categoriesSnapshot.forEach(categorie => {
-      if (categorie.data().account === account) {
-        cat.push(categorie.data());
+  const getTasks = async account => {
+    const tasksSnapshot = await firestore().collection('tasks').get();
+    let tsk = [];
+    tasksSnapshot.forEach(task => {
+      if (task.data().account === account) {
+        tsk.push(task.data());
       }
     });
-    setCategories(cat);
+    setTasks(tsk);
   };
 
   const renderList = ({item}) => {
@@ -65,7 +66,7 @@ const Categories = ({navigation}) => {
                 alignItems: 'center',
               }}>
               <Ionicons name={'time-outline'} size={24} color={COLOR.TEXT} />
-              <Text>{item.tasks} Tareas pendientes</Text>
+              <Text> Horas</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -75,9 +76,13 @@ const Categories = ({navigation}) => {
 
   return (
     <View>
-      <FlatList data={categories} renderItem={renderList} />
+      <Button
+        onPress={() => navigation.navigate('Categories')}
+        title={'Categorías'}
+      />
+      <FlatList data={tasks} renderItem={renderList} />
     </View>
   );
 };
 
-export default Categories;
+export default Tasks;

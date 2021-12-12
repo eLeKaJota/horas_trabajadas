@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLOR} from '../Constants/Colors';
 import Categories from '../Views/Categories';
 import Settings from '../Views/Settings';
+import {TaskNavigator} from './TaskNavigator';
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -53,8 +54,8 @@ const TabNavigator = () => {
         },
       })}>
       <Tab.Screen
-        name="Categories"
-        component={Categories}
+        name="TaskNavigator"
+        component={TaskNavigator}
         options={{
           tabBarIcon: ({focused}) => {
             let iconName;
