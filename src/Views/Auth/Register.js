@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {TextInput, View, StyleSheet, Button} from 'react-native';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const Register = ({navigation}) => {
   const [user, onChangeUser] = useState();
+  const [username, onChangeUsername] = useState();
   const [password, onChangePassword] = useState();
   const styles = StyleSheet.create({
     input: {
@@ -22,12 +24,23 @@ const Register = ({navigation}) => {
     },
   });
 
-  const onLoginHandle = () => {
-    if (user && password) {
+  const onRegisterHandle = () => {
+    if (user && password && username) {
       auth()
-        .signInWithEmailAndPassword(user, password)
-        .then(() => {
-          console.log('signed in!');
+        .createUserWithEmailAndPassword(user, password)
+        .then(res => {
+          console.log('signed in!', res.user._user.uid);
+          firestore()
+            .collection('accounts')
+            .add({
+              email: user,
+              username: username,
+              uid: res.user._user.uid,
+              created: firestore.FieldValue.serverTimestamp(),
+            })
+            .then(() => {
+              console.log('User added!');
+            });
           navigation.navigate('Home');
         })
         .catch(error => {
@@ -55,16 +68,22 @@ const Register = ({navigation}) => {
       />
       <TextInput
         style={styles.input}
+        onChangeText={onChangeUsername}
+        value={username}
+        placeholder="User Name"
+      />
+      <TextInput
+        style={styles.input}
         onChangeText={onChangePassword}
         value={password}
         placeholder="Password"
         secureTextEntry={true}
       />
       <View style={styles.fixToText}>
-        <Button onPress={onLoginHandle} title="Register" />
+        <Button onPress={onRegisterHandle} title="Register" />
       </View>
     </View>
   );
 };
 
-export default Login;
+export default Register;

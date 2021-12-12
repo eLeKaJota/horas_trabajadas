@@ -46,7 +46,7 @@ const UserContext = ({children}) => {
     return null;
   }
 
-  if (!showChild) {
+  if (false) {
     return (
       <>
         <Text>waa</Text>

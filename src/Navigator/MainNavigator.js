@@ -4,6 +4,7 @@ import auth from '@react-native-firebase/auth';
 import Login from '../Views/Auth/Login';
 import {HomeScreen} from '../Views/HomeScreen';
 import {Button} from 'react-native';
+import Register from '../Views/Auth/Register';
 
 export const MainNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -43,6 +44,20 @@ export const MainNavigator = () => {
         component={Login}
         options={{
           title: 'Login',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+            textAlign: 'center',
+          },
+          headerTitleAlign: 'center',
+          headerTintColor: '#fff',
+          headerTitleStyle: {},
+        }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{
+          title: 'Register',
           headerStyle: {
             backgroundColor: '#f4511e',
             textAlign: 'center',
