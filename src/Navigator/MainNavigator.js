@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth';
 import Login from '../Views/Auth/Login';
@@ -12,6 +12,7 @@ export const MainNavigator = () => {
     <Stack.Navigator
       initialRouteName="Home"
       screenOptions={({navigation}) => ({
+        headerShown: false,
         headerRight: () => {
           return (
             <Button
